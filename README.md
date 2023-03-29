@@ -7,7 +7,7 @@ Each endpoint in the API check is the same.
 Install `playwright`, `axios` and `fs-extra` to get started.  
 `npm i @playwright axios fs-extra`  
 
-'Usage: `node scrape.js <company name> (ChecklyHQ) <status page url> (is.checkly.online) <token> (e.g 9df028a0-...)`  
+Usage: `node scrape.js <company name> (ChecklyHQ) <status page url> (is.checkly.online) <token> (e.g 9df028a0-...)`  
 You'll need your access token from JSONMap if you want to upload the Status Page structure for future reference.  
 You don't need to provide a token. The script will skip this part if omitted.  
 
