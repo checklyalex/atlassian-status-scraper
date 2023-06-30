@@ -18,7 +18,7 @@ async function run() {
   const page = await context.newPage();
   await page.goto("https://" + url);
   const elementExists = await page.$('.group-parent-indicator');
-  const twoColumns = await page.$('.components-container .two-columns');
+  const twoColumns = await page.$('.components-container.two-columns');
 
   if (elementExists) {
     console.log('Groups used on Status Page');
@@ -27,9 +27,11 @@ async function run() {
   } else {
     console.log('Groups not used on Status Page');
     if (twoColumns){
+      console.log('Two Columns detected');
       var parentElement = await page.$('.components-container.two-columns');
       var childElements = await parentElement.$$('.component-inner-container .name');
     } else {
+      console.log('One Column detected');
     var parentElement = await page.$('.components-container.one-column');
     var childElements = await parentElement.$$('.component-inner-container .name');
     }
