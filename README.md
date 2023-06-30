@@ -13,6 +13,13 @@ You don't need to provide a token. The script will skip this part if omitted.
 
 # WIP
 This tool has only been tested with:  
-- `https://is.checkly.online/` 
-- `https://status.box.com/` 
-- `https://status.teamwork.com/`
+- `https://is.checkly.online/` - Single column, no group design
+- `https://status.hubspot.com`
+- `https://status.openai.com`
+- `https://status.sumsub.com`
+- `https://status.udemy.com`
+- `https://status.box.com/` - New single column, groups design
+- `https://status.teamwork.com/` - Single column, groups design
+- `https://status.linode.com/`
+- `https://status.zoom.us/`
+- `https://status.grammarly.com/` - Two column, no group design
