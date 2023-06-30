@@ -18,25 +18,39 @@ async function run() {
   const page = await context.newPage();
   await page.goto("https://" + url);
   const elementExists = await page.$('.group-parent-indicator');
+  const twoColumns = await page.$('.components-container .two-columns');
 
   if (elementExists) {
     console.log('Groups used on Status Page');
-    var parentElement = await page.$('.components-container.one-column');
-    var childElements = await parentElement.$$('.child-components-container .name');
+    var parentElement = await page.$('.components-container');
+    var childElements = await parentElement.$$('.name');
   } else {
     console.log('Groups not used on Status Page');
+    if (twoColumns){
+      var parentElement = await page.$('.components-container.two-columns');
+      var childElements = await parentElement.$$('.component-inner-container .name');
+    } else {
     var parentElement = await page.$('.components-container.one-column');
     var childElements = await parentElement.$$('.component-inner-container .name');
+    }
   }
   
-  const items = [];
 
-  // Iterate through the list of child elements and extract their text content
-  for (const childElement of childElements) {
-    const textContent = await childElement.textContent();
-    const cleanContent = textContent.trim().replace(/\s+/g, ' ');
-    items.push({name: cleanContent, status:"Healthy"})
+  let itemsMap = new Map();
+for (const childElement of childElements) {
+  const textContent = await childElement.textContent();
+  const cleanContent = textContent.trim().replace(/\s+/g, ' ');
+
+  // If the map already has this name, skip it
+  if (!itemsMap.has(cleanContent)) {
+    const item = { name: cleanContent, status: "Healthy" };
+    itemsMap.set(cleanContent, item);
   }
+}
+
+// Convert your map values into an array
+  let items = Array.from(itemsMap.values());
+
     // Create a JSON object with the array data
   const myJson = { items };
 
@@ -71,7 +85,7 @@ async function run() {
 
   for (let i = 0; i < myJson.items.length; i++) {
     function replaceSpacesWithUnderscores(str) {
-      return str.toLowerCase().replace(/\s+/g, '_');
+      return str.toLowerCase().replace(/[^a-zA-Z0-9]/g, '_');
     }
     const check_name = myJson.items[i].name;
     const logical_name = replaceSpacesWithUnderscores(myJson.items[i].name);
@@ -83,7 +97,7 @@ async function run() {
       maxResponseTime: 20000,
       group,
       request: {
-        url: 'https://` + url + `/v1/api/health-check',
+        url: 'https://` + url + `/api/v2/status.json',
         method: 'GET',
         followRedirects: true,
         assertions: [
@@ -94,9 +108,7 @@ async function run() {
     `
   }
     let statusPageCheckFile = `${checksFolder}/status_page.check.ts`;
-    let status_page_check = `import { CheckGroup, ApiCheck, AssertionBuilder } from '@checkly/cli/constructs'
-    import * as fs from 'fs';
-    import * as path from 'path';
+    let status_page_check = `import { CheckGroup, ApiCheck, AssertionBuilder } from 'checkly/constructs'
 
     const group = new CheckGroup('${comapny_name}-sp-group', {
       name: '${comapny_name} Status Page',

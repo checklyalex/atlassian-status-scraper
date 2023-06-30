@@ -104,6 +104,6 @@ dist
 .tern-port
 
 # new
-./generated
+generated/
 package-lock.json
 package.json
