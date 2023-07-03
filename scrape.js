@@ -5,7 +5,7 @@ const fs = require('fs-extra');
 const args = process.argv.slice(2);
 
 if (args.length < 2) {
-  console.error('Usage: node scrape.spec.js <company name> (ChecklyHQ) <status page url> (is.checkly.online) <token> (e.g 9df028a0-...)');
+  console.error('Usage: node scrape.js <company name> (ChecklyHQ) <status page url> (is.checkly.online) <token> (e.g 9df028a0-...)');
   process.exit(1);
 }
 const comapny_name = args[0];
