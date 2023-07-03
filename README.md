@@ -20,7 +20,8 @@ This tool has only been tested with:
 - `https://status.udemy.com`
 - `https://status.box.com/` - New single column, groups design
 - `https://status.teamwork.com/` - Single column, groups design
+- `https://www.redditstatus.com/`
 - `https://status.linode.com/`
 - `https://status.zoom.us/`
-- `www.vercel-status.com`  
+- `https://www.vercel-status.com`  
 - `https://status.grammarly.com/` - Two column, no group design
